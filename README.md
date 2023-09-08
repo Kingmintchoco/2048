@@ -1,15 +1,13 @@
 # 2048
 2048 with Unity
 
----
+***
 
 # Refrerence
 <https://www.youtube.com/watch?v=4NFZwPhqeRs>
 
 <https://github.com/zigurous/unity-2048-tutorial>
 
-
----
 
 ***
 
