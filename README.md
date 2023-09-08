@@ -9,9 +9,8 @@
 <https://github.com/zigurous/unity-2048-tutorial>
 
 
-***
 
-## :☀️:  Color
+# :☀️:  Color
 - Tile 2
 
   Background: #EEE4DA
