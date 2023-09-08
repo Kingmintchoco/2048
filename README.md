@@ -3,7 +3,7 @@
 
 ***
 
-## :☀️: Color
+## :☀️:  Color
 - Tile 2
 
   Background: #EEE4DA
