@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileBoard : MonoBehaviour
 {
     public GameManager gameManager;
+
     public Tile tilePrefab;
     public TileState[] tileStates;
     private TileGrid grid;
@@ -32,8 +33,9 @@ public class TileBoard : MonoBehaviour
 
     public void CreateTile(){
         Tile tile = Instantiate(tilePrefab, grid.transform);
-        tile.SetState(tileStates[0], 2);
+        tile.SetState(tileStates[0]);
         tile.Spawn(grid.GetRandomEmptyCell());
+        tiles.Add(tile);
     }
 
     private void Update(){
@@ -77,7 +79,7 @@ public class TileBoard : MonoBehaviour
             if(adjacentCell.occupied){  
                 // merging
                 if(CanMerge(tile, adjacentCell.tile)){
-                    Merge(tile, adjacentCell.tile);
+                    MergeTiles(tile, adjacentCell.tile);
                     return true;
                 }
                 break;
@@ -98,11 +100,11 @@ public class TileBoard : MonoBehaviour
 
     // each tiles has same number tile?
     private bool CanMerge(Tile a, Tile b){
-        return a.number == b.number && !b.locked; 
+        return a.state == b.state && !b.locked; 
     }
 
     // merge
-    private void Merge(Tile a, Tile b){
+    private void MergeTiles(Tile a, Tile b){
         // destroy tile a, and new merged tile in b's posiion 
         tiles.Remove(a);
         a.Merge(b.cell);
@@ -110,10 +112,10 @@ public class TileBoard : MonoBehaviour
         // update to state of b(next tile level)
         // int index = IndexOf(b.state) + 1; < It's inappropriate becase the state level can be increased indefinitely
         int index = Mathf.Clamp(IndexOf(b.state) + 1, 0, tileStates.Length - 1);
-        int number = b.number * 2;
-        b.SetState(tileStates[index], number);
+        TileState newState = tileStates[index];
 
-        gameManager.IncreaseScore(number);
+        b.SetState(newState);
+        gameManager.IncreaseScore(newState.number);
     }
 
     private int IndexOf(TileState state){

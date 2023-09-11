@@ -7,7 +7,6 @@ public class Tile : MonoBehaviour
 {
     public TileState state { get; private set; }
     public TileCell cell { get; private set; }
-    public int number { get; private set; }
 
     private Image background;
     private TextMeshProUGUI text;
@@ -20,13 +19,12 @@ public class Tile : MonoBehaviour
         text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void SetState(TileState state, int number){
+    public void SetState(TileState state){
         this.state = state;
-        this.number = number;
 
         background.color = state.backgroundColor;
         text.color = state.textColor;
-        text.text = number.ToString();
+        text.text = state.number.ToString();
     }
 
     // tile spawn function
@@ -44,7 +42,7 @@ public class Tile : MonoBehaviour
     public void MoveTo(TileCell cell){
         if(this.cell != null) this.cell.tile = null;
 
-        this.cell =  cell;
+        this.cell = cell;
         this.cell.tile = this;
 
         StartCoroutine(Animate(cell.transform.position, false));
